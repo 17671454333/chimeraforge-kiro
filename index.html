@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ChimeraForge — Kiro Spec-to-Artifact Frankenstein Studio (Kiroween 2026)</title>
+  <style>
+    :root {
+      --bg-obsidian: #080a0f;
+      --bg-panel: #10141e;
+      --bg-card: #151b28;
+      --border-steel: #242f46;
+      --emerald: #10b981;
+      --emerald-dim: rgba(16, 185, 129, 0.16);
+      --amber: #f59e0b;
+      --crimson: #ef4444;
+      --cyan: #06b6d4;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg-obsidian);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border-steel);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-badge {
+      background: var(--emerald-dim);
+      border: 1px solid var(--emerald);
+      color: var(--emerald);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+    }
+    .brand h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .brand p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    button {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-steel);
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    button:hover {
+      border-color: var(--emerald);
+      color: var(--emerald);
+    }
+    button.btn-primary {
+      background: var(--emerald);
+      color: #04130d;
+      border-color: var(--emerald);
+    }
+    button.btn-primary:hover {
+      background: #34d399;
+      color: #04130d;
+    }
+    .kpi-ribbon {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      padding: 14px 24px;
+      background: #0b0e16;
+      border-bottom: 1px solid var(--border-steel);
+    }
+    .kpi-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-steel);
+      border-radius: 6px;
+      padding: 10px 14px;
+    }
+    .kpi-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+    .kpi-val {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 4px;
+      color: var(--emerald);
+    }
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.05fr 1.25fr 1fr;
+      gap: 16px;
+      padding: 16px 24px;
+    }
+    @media (max-width: 1100px) {
+      main { grid-template-columns: 1fr; }
+    }
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-steel);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .panel-header {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-steel);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #121723;
+    }
+    textarea {
+      flex: 1;
+      min-height: 420px;
+      background: #090c12;
+      color: #d1fae5;
+      border: none;
+      padding: 14px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.55;
+      resize: vertical;
+      outline: none;
+    }
+    #topologyCanvas {
+      width: 100%;
+      height: 360px;
+      background: radial-gradient(circle at center, #111827 0%, #07090e 100%);
+      display: block;
+    }
+    .ast-table-wrap {
+      padding: 12px;
+      overflow-y: auto;
+      max-height: 220px;
+      border-top: 1px solid var(--border-steel);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+    }
+    .node-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 8px;
+      border-bottom: 1px solid #1b2436;
+      align-items: center;
+    }
+    .badge-ok { color: var(--emerald); }
+    .badge-warn { color: var(--amber); }
+    .pbt-console {
+      padding: 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.6;
+      overflow-y: auto;
+      max-height: 580px;
+    }
+    .prop-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-steel);
+      border-left: 3px solid var(--emerald);
+      padding: 10px 12px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .prop-title { font-weight: 700; color: #f8fafc; margin-bottom: 4px; }
+    .prop-meta { color: var(--text-muted); font-size: 11px; }
+    footer {
+      padding: 12px 24px;
+      border-top: 1px solid var(--border-steel);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span class="brand-badge">KIROWEEN 2026 · FRANKENSTEIN</span>
+      <div>
+        <h1>⚡ ChimeraForge: Spec-to-Artifact Frankenstein Studio</h1>
+        <p>Stitches Kiro EARS Spec Compiler + Seeded Property-Based Testing + 60fps Force-Directed Physics + WebAudio Dorian Synth + MCP Exporter</p>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn-primary" id="btnCompile">⚡ Compile & Run 300-Vector PBT</button>
+      <button id="btnInjectFault">🧪 Inject Ambiguous Spec (Test Shrinker)</button>
+      <button id="btnAudio">🔊 Synthesize Dorian Telemetry Chord</button>
+      <button id="btnExport">📦 Export MCP Audit JSON</button>
+    </div>
+  </header>
+
+  <section class="kpi-ribbon">
+    <div class="kpi-card">
+      <div class="kpi-label">EARS Spec Health</div>
+      <div class="kpi-val" id="kpiHealth">100%</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Compiled AST Clauses</div>
+      <div class="kpi-val" id="kpiNodes">8 VALID</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">PBT Vectors Verified</div>
+      <div class="kpi-val" id="kpiPbt">300 / 300</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">PRNG Deterministic Seed</div>
+      <div class="kpi-val" id="kpiSeed">#20261109</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Kiro Architecture</div>
+      <div class="kpi-val" style="color: var(--cyan);">Specs + Hooks + MCP</div>
+    </div>
+  </section>
+
+  <main>
+    <section class="panel">
+      <div class="panel-header">
+        <span>1. LIVE .KIRO EARS SPECIFICATION EDITOR</span>
+        <span style="color: var(--emerald);">.kiro/specs/chimera-engine/requirements.md</span>
+      </div>
+      <textarea id="specInput" spellcheck="false">### Requirement 1: Deterministic EARS Spec Parsing
+1. [REQ-01] WHEN a markdown document containing EARS clauses is provided, THE SYSTEM SHALL extract each requirement ID, precondition, and normative response into a JSON AST within 15ms.
+2. [REQ-02] IF a requirement clause lacks a measurable normative modal, THE SYSTEM SHALL flag the node with AMBIGUOUS_SPEC within 5ms.
+3. [REQ-03] WHEN duplicate requirement identifiers exist in the document, THE SYSTEM SHALL deterministically deduplicate and emit a collision warning within 5ms.
+
+### Requirement 2: Automated Property-Based Testing (PBT)
+4. [REQ-04] WHEN the PBT engine executes against a compiled AST node, THE SYSTEM SHALL generate 100 seeded inputs using xorshift128+ within 50ms.
+5. [REQ-05] IF any generated input violates the requirement invariant predicate, THE SYSTEM SHALL shrink the failing input to its minimal counterexample within 24 steps.
+6. [REQ-06] WHILE all 100 generated inputs satisfy the invariant predicate, THE SYSTEM SHALL mark the AST node as VERIFIED_GREEN.
+
+### Requirement 3: Force-Directed Physics & Acoustic Telemetry
+7. [REQ-07] WHEN the AST and PBT results update, THE SYSTEM SHALL render an interactive 60fps force-directed topology graph of specs, hooks, and MCP endpoints.
+8. [REQ-08] WHEN the user triggers acoustic telemetry, THE SYSTEM SHALL map verified nodes to Dorian polyphonic chords via WebAudio API within 20ms.</textarea>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <span>2. 60FPS FORCE-DIRECTED SPEC & HOOK TOPOLOGY</span>
+        <span id="compileTimeLabel" style="color: var(--text-muted);">0.42 ms</span>
+      </div>
+      <canvas id="topologyCanvas" width="640" height="360"></canvas>
+      <div class="ast-table-wrap" id="astNodeList"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <span>3. PROPERTY-BASED TESTING & SHRINKING LEDGER</span>
+        <span style="color: var(--emerald);">xorshift128+</span>
+      </div>
+      <div class="pbt-console" id="pbtOutput"></div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Built with Kiro (Specs · Agent Hooks · Steering · Custom Crew Agents · MCP) for Kiroween 2026</span>
+    <span>Open Source MIT · <a href="https://github.com/17671454333/chimeraforge-kiro" target="_blank">github.com/17671454333/chimeraforge-kiro</a></span>
+  </footer>
+
+  <script src="./src/chimera-core.js"></script>
+  <script src="./src/pbt-runner.js"></script>
+  <script src="./src/audio-alchemist.js"></script>
+  <script>
+    (function () {
+      const specInput = document.getElementById('specInput');
+      const kpiHealth = document.getElementById('kpiHealth');
+      const kpiNodes = document.getElementById('kpiNodes');
+      const kpiPbt = document.getElementById('kpiPbt');
+      const kpiSeed = document.getElementById('kpiSeed');
+      const astNodeList = document.getElementById('astNodeList');
+      const pbtOutput = document.getElementById('pbtOutput');
+      const compileTimeLabel = document.getElementById('compileTimeLabel');
+      const canvas = document.getElementById('topologyCanvas');
+      const ctx = canvas.getContext('2d');
+
+      let currentAst = null;
+      let currentPbt = null;
+      let graphNodes = [];
+      let graphEdges = [];
+      let seedCounter = 20261109;
+
+      function rebuildGraph(ast) {
+        const w = canvas.width;
+        const h = canvas.height;
+        const hubNodes = [
+          { id: 'HOOK:PBT-Guard', label: 'Hook: PBT-Guard', kind: 'hook', x: w * 0.22, y: h * 0.5, vx: 0, vy: 0 },
+          { id: 'MCP:HaveTML', label: 'MCP: HaveTML', kind: 'mcp', x: w * 0.78, y: h * 0.5, vx: 0, vy: 0 }
+        ];
+        const reqNodes = ast.nodes.map((n, idx) => {
+          const angle = (idx / Math.max(1, ast.nodes.length)) * Math.PI * 2;
+          return {
+            id: n.id,
+            label: n.id + ' (' + n.triggerType + ')',
+            kind: n.status === 'VALID_EARS' ? 'valid' : 'ambiguous',
+            x: w * 0.5 + Math.cos(angle) * 115,
+            y: h * 0.5 + Math.sin(angle) * 115,
+            vx: 0,
+            vy: 0
+          };
+        });
+        graphNodes = [...hubNodes, ...reqNodes];
+        graphEdges = [
+          ...ast.edges,
+          ...ast.nodes.map(n => ({ from: 'HOOK:PBT-Guard', to: n.id, type: 'hook' })),
+          ...ast.nodes.filter((_, i) => i % 2 === 0).map(n => ({ from: n.id, to: 'MCP:HaveTML', type: 'mcp' }))
+        ];
+      }
+
+      function stepPhysics() {
+        const w = canvas.width;
+        const h = canvas.height;
+        for (let i = 0; i < graphNodes.length; i++) {
+          for (let j = i + 1; j < graphNodes.length; j++) {
+            const a = graphNodes[i];
+            const b = graphNodes[j];
+            let dx = b.x - a.x;
+            let dy = b.y - a.y;
+            let dist = Math.sqrt(dx * dx + dy * dy) || 1;
+            if (dist < 140) {
+              const rep = (140 - dist) * 0.015;
+              const fx = (dx / dist) * rep;
+              const fy = (dy / dist) * rep;
+              a.vx -= fx; a.vy -= fy;
+              b.vx += fx; b.vy += fy;
+            }
+          }
+        }
+        for (const e of graphEdges) {
+          const a = graphNodes.find(n => n.id === e.from);
+          const b = graphNodes.find(n => n.id === e.to);
+          if (!a || !b) continue;
+          const dx = b.x - a.x;
+          const dy = b.y - a.y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+          const force = (dist - 95) * 0.008;
+          a.vx += (dx / dist) * force;
+          a.vy += (dy / dist) * force;
+          b.vx -= (dx / dist) * force;
+          b.vy -= (dy / dist) * force;
+        }
+        for (const n of graphNodes) {
+          n.vx += (w / 2 - n.x) * 0.003;
+          n.vy += (h / 2 - n.y) * 0.003;
+          n.x += n.vx;
+          n.y += n.vy;
+          n.vx *= 0.86;
+          n.vy *= 0.86;
+          n.x = Math.max(45, Math.min(w - 45, n.x));
+          n.y = Math.max(30, Math.min(h - 30, n.y));
+        }
+      }
+
+      function drawGraph() {
+        stepPhysics();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (const e of graphEdges) {
+          const a = graphNodes.find(n => n.id === e.from);
+          const b = graphNodes.find(n => n.id === e.to);
+          if (!a || !b) continue;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = e.type === 'mcp' ? 'rgba(6, 182, 212, 0.35)' : 'rgba(16, 185, 129, 0.28)';
+          ctx.lineWidth = 1.3;
+          ctx.stroke();
+        }
+
+        for (const n of graphNodes) {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.kind === 'hook' || n.kind === 'mcp' ? 14 : 10, 0, Math.PI * 2);
+          if (n.kind === 'valid') ctx.fillStyle = '#10b981';
+          else if (n.kind === 'ambiguous') ctx.fillStyle = '#f59e0b';
+          else if (n.kind === 'mcp') ctx.fillStyle = '#06b6d4';
+          else ctx.fillStyle = '#3b82f6';
+          ctx.fill();
+          ctx.strokeStyle = '#080a0f';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          ctx.fillStyle = '#e2e8f0';
+          ctx.font = '11px monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(n.label, n.x, n.y - 15);
+        }
+        requestAnimationFrame(drawGraph);
+      }
+
+      function runPipeline() {
+        currentAst = window.ChimeraCore.parseEarsSpec(specInput.value);
+        currentPbt = window.ChimeraPBT.runPropertySuite(seedCounter, 100);
+
+        kpiHealth.textContent = currentAst.specHealthScore + '%';
+        kpiHealth.style.color = currentAst.specHealthScore === 100 ? '#10b981' : '#f59e0b';
+        kpiNodes.textContent = currentAst.validCount + ' VALID / ' + currentAst.ambiguousCount + ' WARN';
+        kpiPbt.textContent = currentPbt.totalPassed + ' / ' + currentPbt.totalVectors;
+        kpiSeed.textContent = '#' + currentPbt.seed;
+        compileTimeLabel.textContent = currentAst.elapsedMs + ' ms';
+
+        astNodeList.innerHTML = currentAst.nodes.map(n => `
+          <div class="node-row">
+            <span><strong>${n.id}</strong> [${n.triggerType}] ${n.response.slice(0, 48)}...</span>
+            <span class="${n.status === 'VALID_EARS' ? 'badge-ok' : 'badge-warn'}">${n.status}</span>
+          </div>
+        `).join('');
+
+        pbtOutput.innerHTML = currentPbt.properties.map(p => `
+          <div class="prop-box">
+            <div class="prop-title">✔ [${p.id}] ${p.name}</div>
+            <div class="prop-meta">Vectors Passed: ${p.passed} / ${p.iterations} · Status: <strong style="color:#10b981">${p.status}</strong></div>
+            ${p.shrunkDemo ? `<div style="margin-top:6px;color:#fbbf24;font-size:11px;">↳ Counterexample Shrinker Demo (${p.shrunkDemo.steps} binary steps):<br/>Original: "${p.shrunkDemo.original}"<br/>Minimal Shrunk: "${p.shrunkDemo.minimal}"</div>` : ''}
+          </div>
+        `).join('') + (currentAst.warnings.length ? `
+          <div class="prop-box" style="border-left-color:#f59e0b;">
+            <div class="prop-title" style="color:#f59e0b;">⚠ Active Spec Ambiguity Warnings (${currentAst.warnings.length})</div>
+            ${currentAst.warnings.map(w => `<div class="prop-meta">Line ${w.line}: ${w.message}</div>`).join('')}
+          </div>
+        ` : '');
+
+        rebuildGraph(currentAst);
+      }
+
+      document.getElementById('btnCompile').addEventListener('click', () => {
+        seedCounter += 7;
+        runPipeline();
+      });
+
+      document.getElementById('btnInjectFault').addEventListener('click', () => {
+        specInput.value += '\n9. [REQ-09] The system should probably handle errors nicely at some point.';
+        runPipeline();
+        window.AudioAlchemist.playTelemetryChord(currentAst);
+      });
+
+      document.getElementById('btnAudio').addEventListener('click', () => {
+        window.AudioAlchemist.playTelemetryChord(currentAst);
+      });
+
+      document.getElementById('btnExport').addEventListener('click', () => {
+        const bundle = {
+          exportedAt: new Date().toISOString(),
+          hackathon: 'Kiroween 2026 (Frankenstein Track)',
+          ast: currentAst,
+          pbt: currentPbt
+        };
+        const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'chimeraforge-kiro-audit.json';
+        a.click();
+      });
+
+      runPipeline();
+      requestAnimationFrame(drawGraph);
+    })();
+  </script>
+</body>
+</html>

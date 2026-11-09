@@ -1,0 +1,11 @@
+# Node dependencies & build caches
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# IMPORTANT FOR KIROWEEN 2026 JUDGES:
+# The /.kiro directory (specs, hooks, steering, agents, settings) is intentionally
+# tracked in version control and NEVER ignored.
+!/.kiro/
+!/.kiro/**

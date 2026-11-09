@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "havetml": {
+      "url": "https://havetml.com/api/mcp",
+      "transport": "http",
+      "description": "HaveTML MCP server for instant zero-config hosting of AI-generated HTML/Markdown/JSON artifacts (@starwaydong)",
+      "headers": {
+        "Authorization": "Bearer ${HAVETML_TOKEN}"
+      }
+    }
+  }
+}

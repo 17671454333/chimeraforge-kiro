@@ -1,0 +1,16 @@
+{
+  "name": "HaveTML MCP Live Artifact Publisher",
+  "version": "1.0.0",
+  "description": "Publishes the self-contained ChimeraForge studio and verification report to HaveTML via MCP whenever a release snapshot is triggered.",
+  "trigger": {
+    "type": "onManualTrigger",
+    "label": "Publish ChimeraForge Artifact to HaveTML MCP"
+  },
+  "action": {
+    "type": "mcpToolCall",
+    "server": "havetml",
+    "tool": "publish_artifact",
+    "followUpPrompt": "Verify the live artifact URL responds with HTTP 200 and update the audit digest in README.md."
+  },
+  "enabled": true
+}

@@ -1,0 +1,18 @@
+{
+  "name": "PBT Spec & Invariant Guard",
+  "version": "1.0.0",
+  "description": "Automatically runs the 300-vector Property-Based Testing suite and verifies EARS spec round-trip invariants whenever a spec or core module is saved.",
+  "trigger": {
+    "type": "onFileSave",
+    "patterns": [
+      ".kiro/specs/**/*.md",
+      "src/**/*.js"
+    ]
+  },
+  "action": {
+    "type": "agentPrompt",
+    "command": "node tests/chimera.pbt.test.js",
+    "prompt": "Run `node tests/chimera.pbt.test.js`. If any EARS clause is marked AMBIGUOUS_SPEC or any PBT property fails, shrink the counterexample and propose a spec-compliant fix before allowing commit."
+  },
+  "enabled": true
+}

@@ -1,0 +1,26 @@
+{
+  "name": "chimeraforge-kiro",
+  "version": "1.0.0",
+  "description": "Frankenstein Spec-to-Artifact Laboratory stitching EARS Spec Compilation, Seeded Property-Based Testing (PBT), 60fps Force-Directed Topology, WebAudio Polyphonic Telemetry & HaveTML MCP Hosting. Built with Kiro for Kiroween 2026.",
+  "main": "src/chimera-core.js",
+  "scripts": {
+    "test": "node tests/chimera.pbt.test.js",
+    "pbt": "node tests/chimera.pbt.test.js"
+  },
+  "keywords": [
+    "kiro",
+    "kiroween-2026",
+    "spec-driven-development",
+    "ears-syntax",
+    "property-based-testing",
+    "mcp",
+    "webaudio",
+    "frankenstein"
+  ],
+  "author": "Dong Tech (dong.tech@my.tccd.edu)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/17671454333/chimeraforge-kiro.git"
+  }
+}

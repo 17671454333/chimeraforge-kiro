@@ -486,11 +486,11 @@
           ast: currentAst,
           pbt: currentPbt
         };
-        const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'chimeraforge-kiro-audit.json';
-        a.click();
+        const jsonText = JSON.stringify(bundle, null, 2);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(jsonText).catch(() => {});
+        }
+        pbtOutput.innerHTML = '<div class="prop-box"><div class="prop-title">📦 MCP Audit Bundle Copied to Clipboard</div><pre style="font-size:11px;color:#10b981;overflow-x:auto;margin-top:6px;">' + jsonText.slice(0, 1200) + '</pre></div>' + pbtOutput.innerHTML;
       });
 
       runPipeline();

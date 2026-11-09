@@ -11,8 +11,8 @@
 ## 🔗 Live Demo & Verification Links
 
 - **Live Working App (GitHub Pages)**: [https://17671454333.github.io/chimeraforge-kiro/](https://17671454333.github.io/chimeraforge-kiro/)
-- **Live Working App (HaveTML MCP Hosted)**: [https://havetml.com/@starwaydong/chimeraforge-kiro](https://havetml.com/@starwaydong/chimeraforge-kiro)
-- **Technical Blog Post (Kiroween 2026 Bonus Blog)**: [https://havetml.com/@starwaydong/kiroween-2026-blog](https://havetml.com/@starwaydong/kiroween-2026-blog)
+- **Live Working App (HaveTML MCP Hosted)**: [https://havetml.com/f/ZBPtSaxGV5](https://havetml.com/f/ZBPtSaxGV5)
+- **Technical Blog Post (Kiroween 2026 Bonus Blog)**: [https://havetml.com/f/VCpPb4czpv](https://havetml.com/f/VCpPb4czpv)
 
 ---
 

@@ -10,7 +10,7 @@
 
 ## 🔗 Live Demo & Verification Links
 
-- **Live Working App (GitHub Pages)**: [https://17671454333.github.io/chimeraforge-kiro/](https://17671454333.github.io/chimeraforge-kiro/)
+- **Live Working App (GitHub Pages)**: [https://havetml.com/f/chimeraforge-kiro](https://havetml.com/f/chimeraforge-kiro)
 - **Live Working App (HaveTML MCP Hosted)**: [https://havetml.com/f/ZBPtSaxGV5](https://havetml.com/f/ZBPtSaxGV5)
 - **Technical Blog Post (Kiroween 2026 Bonus Blog)**: [https://havetml.com/f/VCpPb4czpv](https://havetml.com/f/VCpPb4czpv)
 
@@ -58,7 +58,7 @@ Per Kiroween 2026 rules, the root [`/.kiro`](./.kiro) directory is tracked direc
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/17671454333/chimeraforge-kiro.git
+git clone https://havetml.com/f/chimeraforge-kiro.git
 cd chimeraforge-kiro
 
 # 2. Run the 300-vector Property-Based Testing & .kiro compliance suite

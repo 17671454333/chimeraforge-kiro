@@ -1,0 +1,9 @@
+file 'D:/AI游戏工作室/chimeraforge-kiro/docs/shot1_studio_verified.png'
+duration 7
+file 'D:/AI游戏工作室/chimeraforge-kiro/docs/shot2_pbt_300_vectors.png'
+duration 7
+file 'D:/AI游戏工作室/chimeraforge-kiro/docs/shot3_fault_shrinker.png'
+duration 7
+file 'D:/AI游戏工作室/chimeraforge-kiro/docs/shot4_mcp_export.png'
+duration 7
+file 'D:/AI游戏工作室/chimeraforge-kiro/docs/shot4_mcp_export.png'

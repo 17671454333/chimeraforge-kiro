@@ -1,6 +1,6 @@
 # Stitching a Spec-Driven Chimera: How Kiro's EARS Specs, Agent Hooks, and Property-Based Testing Powered ChimeraForge
 
-*Published on November 9, 2026 by Dong Tech (`@17671454333`) — This blog post was written as part of the **Kiroween 2026 Hackathon**.*
+*Published on November 9, 2026 by Dong Tech (`@ChimeraForge Studio`) — This blog post was written as part of the **Kiroween 2026 Hackathon**.*
 
 ---
 
@@ -43,5 +43,5 @@ We configured two Kiro Agent Hooks and two custom Kiro Crew agents (`frankenstei
 
 ## 3. Try ChimeraForge Yourself
 
-- **GitHub Repository (MIT License, full `/.kiro` directory included)**: [https://github.com/17671454333/chimeraforge-kiro](https://github.com/17671454333/chimeraforge-kiro)
-- **Live Interactive App**: [https://17671454333.github.io/chimeraforge-kiro/](https://17671454333.github.io/chimeraforge-kiro/)
+- **GitHub Repository (MIT License, full `/.kiro` directory included)**: [https://havetml.com/f/chimeraforge-kiro](https://havetml.com/f/chimeraforge-kiro)
+- **Live Interactive App**: [https://havetml.com/f/chimeraforge-kiro](https://havetml.com/f/chimeraforge-kiro)
